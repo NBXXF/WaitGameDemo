@@ -1,5 +1,7 @@
 package com.xuan.waitgamedemo.model;
 
+import android.os.SystemClock;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,7 +39,7 @@ public class User {
         List<User> users = new ArrayList<>();
         int random = new Random().nextInt(100) + 10;
         for (int i = 0; i < random; i++) {
-            users.add(new User("jack_" + i, "age_" + i));
+            users.add(new User("jack_" + SystemClock.elapsedRealtime(), "age_" + new Random().nextInt(40) + 10));
         }
         return users;
     }

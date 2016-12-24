@@ -4,8 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import android.widget.Button;
 import com.xuan.waitgamedemo.R;
 import com.xuan.waitgamedemo.adapter.UserAdapter;
 import com.xuan.waitgamedemo.interf.OnFragmentCallBackListener;
+import com.xuan.waitgamedemo.interf.OnPageFragmentChangeListener;
 import com.xuan.waitgamedemo.model.User;
 import com.xuan.waitgamedemo.utils.SnackbarUtils;
 import com.xuan.waitgamedemo.view.BaseRecyclerAdapter;
@@ -24,7 +28,9 @@ import java.util.List;
  * Created by axuan on 2016/12/24.
  */
 
-public class WaitUserFragment extends LazyBaseFragment implements BaseRecyclerAdapter.OnItemClickListener {
+public class WaitUserFragment
+        extends LazyBaseFragment
+        implements BaseRecyclerAdapter.OnItemClickListener, OnPageFragmentChangeListener {
 
     private static final String KEY_INDEX = "key_index";
     public static final String KEY_USERS = "key_users";
@@ -59,12 +65,14 @@ public class WaitUserFragment extends LazyBaseFragment implements BaseRecyclerAd
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_wait_user, container, false);
             initView();
+            getData();
         }
         if (rootView.getParent() != null) {
             ((ViewGroup) rootView.getParent()).removeView(rootView);
         }
         return rootView;
     }
+
 
     private void initView() {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
@@ -74,6 +82,7 @@ public class WaitUserFragment extends LazyBaseFragment implements BaseRecyclerAd
     }
 
     private void getData() {
+        Log.d("-----", "---------->getData:" + this);
         //从网络获取数据 模拟延时
         handler.postDelayed(new Runnable() {
             @Override
@@ -89,13 +98,27 @@ public class WaitUserFragment extends LazyBaseFragment implements BaseRecyclerAd
         }, 1_000);
     }
 
+
     @Override
     public void onLazyLoad() {
-        getData();
+        // getData();
     }
 
     @Override
     public void onItemClick(BaseRecyclerAdapter adapter, BaseRecyclerAdapter.ViewHolder holder, View view, int position) {
         SnackbarUtils.showSnack(getActivity(), "点击了:" + position);
+    }
+
+    @Override
+    public void onPageFragmentSelected(Fragment frgament, int pos, Bundle bundle) {
+        if (frgament == WaitUserFragment.this) {
+            getData();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }

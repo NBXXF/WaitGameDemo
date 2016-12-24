@@ -11,6 +11,7 @@ import com.xuan.waitgamedemo.BaseFragmentAdapter;
 import com.xuan.waitgamedemo.interf.OnFragmentCallBackListener;
 import com.xuan.waitgamedemo.R;
 import com.xuan.waitgamedemo.fragment.WaitUserFragment;
+import com.xuan.waitgamedemo.interf.OnPageFragmentChangeListener;
 
 import java.util.Arrays;
 
@@ -34,8 +35,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentCallBac
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                Fragment fragment = fragmentAdapter.getItem(position);
-                fragment.setUserVisibleHint(true);
+                for (int i = 0; i < fragmentAdapter.getFragmentsList().size(); i++) {
+                    Fragment fragment = fragmentAdapter.getItem(position);
+                    fragment.setUserVisibleHint(i == position);
+                    if (fragment instanceof OnPageFragmentChangeListener) {
+                        ((OnPageFragmentChangeListener) fragment).onPageFragmentSelected(fragment, position, null);
+                    }
+                }
             }
         });
         getTitleMenu();
