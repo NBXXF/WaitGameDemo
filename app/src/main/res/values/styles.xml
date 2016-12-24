@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!--  自定义样式 by youxuan -->
+    <!-- tablyout   -->
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="android:background">@android:color/white</item>
+        <item name="tabIndicatorColor">#000000</item>
+        <item name="tabBackground">@android:color/transparent</item>
+        <item name="tabTextAppearance">@style/CustomTabTextAppearance</item>
+        <item name="tabSelectedTextColor">#ff0000</item>
+    </style>
+
+    <!--  tablayout tab -->
+    <style name="CustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#ff0000</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+</resources>
